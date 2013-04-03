@@ -1,0 +1,74 @@
+\documentclass[11pt]{article}
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[utf8]{inputenc}
+% or whatever
+
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+
+\usepackage{amsmath}
+
+
+\begin{document}
+  Non-Defeseable
+  \begin{alignat}{2}
+    &\label{eq:axiom1} holds(L) \leftarrow & rule(R, L, Body),\\       
+    &                                       & hold(Body). \nonumber \\ \nonumber \\       
+    & \label{eq:axiom2} hold([]). \\ \nonumber \\
+    & \label{eq:axiom3} hold([H|T]) \leftarrow & holds(H),\\
+    &                                             & hold(T). \nonumber 
+  \end{alignat}
+
+
+  Defeseable
+  \begin{alignat}{2}
+   & \label{eq:axiom4} holds\_by\_default(L) \leftarrow & holds(L).\\ \nonumber \\       
+   & \label{eq:axiom5} holds\_by\_default(L) \leftarrow & rule(R, L, Body),\\       
+   &                                                  & hold\_by\_default(Body). \nonumber \\ \nonumber \\
+   & \label{eq:axiom6} holds\_by\_default(L) \leftarrow & default(D, L, Body),\\       
+   &                                                  & hold\_by\_default(Body), \nonumber \\
+   &                                                  & not~defeated(D), \nonumber \\
+   &                                                  & not~holds\_by\_default(\neg L). \nonumber \\
+   & \label{eq:axiom7} hold\_by\_default([]). \\ \nonumber \\
+   & \label{eq:axiom8} hold\_by\_default([H|T]) \leftarrow & holds\_by\_default(H),\\
+   &                                             & hold\_by\_default(T). \nonumber 
+  \end{alignat}
+
+  Defeating axioms
+  \begin{alignat}{2}
+   & \label{eq:axiom9} defeated(D) \leftarrow & default(D,L,Body), \\       
+   &                                          & holds(\neg L). \nonumber \\ \nonumber \\       
+   & \label{eq:axiom10} defeated(D) \leftarrow & default(D, L, Body),\\       
+   &                                             & default(D_1, L_1, Body_1), \nonumber \\ 
+   &                                             & holds(conflict(D_1, D)), \nonumber \\ 
+   &                                             & holds\_by\_default(prefer(D_1, D)), \nonumber \\ 
+   &                                             & holds\_by\_default(Body_1), \nonumber \\ 
+   &                                             & not~defeated(D_1). \nonumber \\
+   & \label{eq:axiom11} holds(conflict(D_1, D_2)). &\\
+   & \label{eq:axiom12} \neg holds(conflict(D, D)). &\\
+   & \label{eq:axiom13} holds(conflict(D_1, D_2))  \leftarrow & holds(conflict(D_2, D_1)). \\
+   &                                                          & D_1 \not= D_2 \nonumber \\ \nonumber \\ 
+   & \label{eq:axiom14} \neg h\_by\_d(prefer(D_1, D_2)) \leftarrow & h\_b\_d(prefer(D_2, D_1)). \\
+   &                                                                          & D_1 \not= D_2 \nonumber
+  \end{alignat}
+
+
+  Uniqueness of names
+  \begin{alignat}{2}
+   & \label{eq:axiom15} rule(R,F_1, B_1) \leftarrow & default(R,F_2,B_2), \\ \nonumber \\
+   & \label{eq:axiom16} \neg rule(R,F_1, B_1) \leftarrow & rule(R, F_2, B_2). \\ 
+   &                                                    & rule(R, F_1, B_1) \not= rule(R, F_2, B_2) \nonumber \\
+   & \label{eq:axiom17} \neg default(D,F_1, B_1) \leftarrow & default(D, F_2, B_2). \\ 
+   &                                                    & default(D, F_1, B_1) \not= default(R, F_2, B_2) \nonumber \\
+  \end{alignat}
+
+  Auxilary 
+  \begin{alignat}{2}
+   & \label{eq:axiom18} \neg holds(L) \leftarrow & holds(\neg L). \\ \nonumber \\
+   & \label{eq:axiom18} \neg holds\_by\_default(L) \leftarrow & holds\_by\_default(\neg L).
+  \end{alignat}
+\end{document}
