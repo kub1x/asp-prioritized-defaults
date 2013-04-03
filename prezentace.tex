@@ -47,38 +47,37 @@
 % Or whatever. Note that the encoding and the font should match. If T1
 % does not look nice, try deleting the line with the fontenc.
 
+\usepackage{amsmath}
+
 
 \title[Short Paper Title] % (optional, use only with long paper titles)
-{Presentation Title}
+{Reasoning with Prioritized Defaults}
 
-\subtitle
-{Presentation Subtitle} % (optional)
+%TODO??
+%\subtitle
+%{Presentation Subtitle} % (optional)
 
-\author[Author, Another] % (optional, use only with lots of authors)
-{F.~Author\inst{1} \and S.~Another\inst{2}}
+\author[Michail Gelfond, Tran Cao Son] % (optional, use only with lots of authors)
+{Michail Gelfond, Tran Cao Son}
 % - Use the \inst{?} command only if the authors have different
 %   affiliation.
 
 \institute[Universities of Somewhere and Elsewhere] % (optional, but mostly needed)
 {
-  \inst{1}%
-  Department of Computer Science\\
-  University of Somewhere
-  \and
-  \inst{2}%
-  Department of Theoretical Philosophy\\
-  University of Elsewhere}
+  Computer Science Department\\
+  University of Texas at El Paso
+}
 % - Use the \inst command only if there are several affiliations.
 % - Keep it simple, no one is interested in your street address.
 
 \date[Short Occasion] % (optional)
-{Date / Occasion}
+{1998}
 
 \subject{Talks}
 % This is only inserted into the PDF information catalog. Can be left
 % out. 
 
-
+%TODO
 
 % If you have a file called "university-logo-filename.xxx", where xxx
 % is a graphic format that can be processed by latex or pdflatex,
@@ -109,6 +108,14 @@
 
 \begin{frame}
   \titlepage
+
+\begin{center}
+\vspace{-30pt}
+Presented by: \\
+Jakub Podlaha, \\
+Vladislav Vavra
+\end{center}
+
 \end{frame}
 
 \begin{frame}{Outline}
@@ -127,61 +134,176 @@
 % - Talk about 30s to 2min per frame. So there should be between about
 %   15 and 30 frames, all told.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-\subsection[Short First Subsection Name]{First Subsection Name}
+%%%%%%%%%%%%%
+\subsection[Motivation]{Why prooritize defaults?}
 
 \begin{frame}{Make Titles Informative. Use Uppercase Letters.}{Subtitles are optional.}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
 
+Defaults with different conclusions\\
+e.g. legal reasoning, Reasoning with experts Knowledge
+
+%  \begin{itemize}
+%  \item
+%    Use \texttt{itemize} a lot.
+%  \item
+%    Use very short sentences or short phrases.
+%  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%
+\subsection[Approaches]{Two possible views}
+
+\begin{frame}{Two possible views}
+\begin{itemize}
+  \item develop "default" language, special syntax
+  \item use logic programming syntax 
+     augmented by the preference relation
+\end{itemize}
+
+%  You can create overlays\dots
+%  \begin{itemize}
+%  \item using the \texttt{pause} command:
+%    \begin{itemize}
+%    \item
+%      First item.
+%      \pause
+%    \item    
+%      Second item.
+%    \end{itemize}
+%  \item
+%    using overlay specifications:
+%    \begin{itemize}
+%    \item<3->
+%      First item.
+%    \item<4->
+%      Second item.
+%    \end{itemize}
+%  \item
+%    using the general \texttt{uncover} command:
+%    \begin{itemize}
+%      \uncover<5->{\item
+%        First item.}
+%      \uncover<6->{\item
+%        Second item.}
+%    \end{itemize}
+%  \end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%
+\subsection[Approach]{This Paper Approach}
+
+\begin{frame}{This Paper Approach}
+\begin{itemize}
+  \item a's are normally b's
+  \item dynamic priorities
+  \item give semantics without new general purpose nonmonotonic formalism
+  \item elaboration tolerant (small changes in intuition - small changes in program)
+  \item some inference mechanism already available
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Logic Program P composed of}
+\begin{itemize}
+  \item logic program P composed of:
+    \begin{itemize}
+      \item domain independent axioms 
+      \item domain description L
+      \item notion of entailment between query and domain description
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Language with Prioritized Defaults}
+
+%%%%%%%%%%%%%
+\subsection{brave approach}
+
+\begin{frame}{brave approach}
+  include (resolve) all possible answer sets\\
+  ...
+\end{frame}
+
+\begin{frame}{Basic syntax}
+  \begin{alignat}{1}
+   & \label{item:rule1} rule(r, l_0, [l_1, \dots l_m]) \\
+   & \label{item:rule2} default(d, l_0, [l_1, \dots l_m]) \\
+   & \label{item:rule3} conflict(d_1, d_2) \\
+   & \label{item:rule4} prefer(d_1, d_2)
+  \end{alignat}
+\end{frame}
+
+\begin{frame}{Basic syntax - example}
+  show "logic counter-part" as intuitive explanaiton\\
+  $ l_0 \leftarrow l_1, \dots, l_n$
+\end{frame}
+
+
+\begin{frame}{Example - programming students}
+  dept, mary, isin etc..
+\end{frame}
+
+
+%%%%%%%%%%%%%
+\subsection{Axioms of P}
+
+\begin{frame}{Entailment in domain description}
+  \textbf{Definition 2.2} We say that a domain description $\mathcal{D}$ entails
+  a~query q $(\mathcal{D} \models q)$ if q belongs to every answer set
+  of the~program \\
+  $\mathcal{P}_\sigma(\mathcal{D}) = \mathcal{P}_\sigma \cup \{ holds(l) \ | \ l \in fact(\mathcal{D}) \} \cup laws(\mathcal{D})$. 
+
+  $laws(\mathcal{D})$ denotes set of statements of the form \ref{item:rule1} and \ref{item:rule2}
+\end{frame}
+
+
+\begin{frame}{Axiomy}
+\end{frame}
+
+
+\begin{frame}{Examples}
   \begin{itemize}
-  \item
-    Use \texttt{itemize} a lot.
-  \item
-    Use very short sentences or short phrases.
+    \item go through programming students example, show it running on computer
+    \item example of flying penguin, ask them and let them quess,
+       then show the correct answer on pc
+    \item maybe use example 3.3 (not yet ready)
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Make Titles Informative.}
 
-  You can create overlays\dots
+\begin{frame}{Extending the language}
   \begin{itemize}
-  \item using the \texttt{pause} command:
-    \begin{itemize}
-    \item
-      First item.
-      \pause
-    \item    
-      Second item.
-    \end{itemize}
-  \item
-    using overlay specifications:
-    \begin{itemize}
-    \item<3->
-      First item.
-    \item<4->
-      Second item.
-    \end{itemize}
-  \item
-    using the general \texttt{uncover} command:
-    \begin{itemize}
-      \uncover<5->{\item
-        First item.}
-      \uncover<6->{\item
-        Second item.}
-    \end{itemize}
+    \item $default(d,l_0,[l_1, l_2, ... l_m], [l_m+1, ... l_n])$
+    \item show new axioms
+    \item example 4.1 : who can vote?
   \end{itemize}
 \end{frame}
 
 
-\subsection{Second Subsection}
-
-\begin{frame}{Make Titles Informative.}
+\begin{frame}{Weak Exceptions}
+  \begin{itemize}
+    \item "do not apply default d to objects satisfiyng property p" 
+    \item How to do it?
+    \item $exception(d, [l_1, ... ,l_n] [l_n+1,...ln+m])$
+    \item add new axiom: defeated(D) :- exception ......    
+  \end{itemize}
 \end{frame}
 
-\begin{frame}{Make Titles Informative.}
+
+\begin{frame}{Cautions reasoning}
+  \begin{itemize}
+    \item Two contrary defaults - no result will be done
+    \item add new axiom
+  \end{itemize}
 \end{frame}
+
+
 
 
 
