@@ -155,46 +155,69 @@ Vladislav Vavra
 
   \begin{frame}{Two Possible Approaches}
     \begin{itemize}
-      \item Develop language to express Default logic (special syntax)
-      \item Use standard Logic programming syntax augmented by
-            the preference relation
+      \item Develop language to express prioritized defaults (special~semantics)
+      \begin{itemize}
+        \item ex. generate answer sets and reduce by preference relation
+      \end{itemize}
+      \item Use standard Logic programming augmented by the~preference relation
     \end{itemize}
   \end{frame}
 
-  \subsection[Used Approach]{Used Approach}
+  \subsection[The Paper's Approach]{The Paper's Approach}
 
-  \begin{frame}{Used Approach}
+  \begin{frame}{The Paper's Approach}
     \begin{itemize}
-      \item Design simple language $\mathcal{L}$
-      \item Understands narrow sence "a's are normally b's"
-      \item Allows dynamic priorities (i.e. defaults \\ with preference relation)
-      \item Gives semantics without new general purpose nonmonotonic formalism
+      %\item Design simple language %$\mathcal{L}$
+      \item Understand narrow sence "a's are normally b's"
+      \item Allow dynamic priorities (i.e. defaults \\ with preference relation)
       \item Elaboration tolerant
+      \item Give semantics without new general purpose nonmonotonic formalism
       \item Some inference mechanism already available
     \end{itemize}
   \end{frame}
 
+  
+  \begin{frame}{Example - Programming Students}
+    \begin{alltt}
+student(mary). dept(cs). \ is\_in(mary,cs). \\
+student(mike). dept(art). is\_in(mike,art).\\
+student(sam). \ dept(cis). is\_in(sam,cis). \\ ~ \\
+default(d1(S), -can\_progr(S), [student(S)]). \\
+default(d2(S), \ can\_progr(S), [student(S), \\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_in(S,cs)]).\\ ~ \\
+prefer(d1(S), d2(S)).
+    \end{alltt}
+  \end{frame}
+  
   \begin{frame}{The Language of Prioritized Defaults}
+    Logic program composed of: %$\mathcal{P}$
     \begin{itemize}
-      \item Logic program $\mathcal{P}$ composed of:
+      \item Domain description %(denoted $\mathcal{D}$)
+      \begin{itemize}
+        \item Facts 
+        \item Laws about defaults and preferences
         \begin{itemize}
-          \item domain independent axioms (denoted $\mathcal{P}_\sigma$)
-          \item domain description (denoted $\mathcal{D}$)
-          \item notion of entailment between query and domain description
+          %\item i.e. statements in form default(D, L, Body) and \mbox{prefer(D1, D2).} 
+          \item \texttt{rule(R, H, Body)} 
+          \item \texttt{default(D, H, Body)}
         \end{itemize}
+      \end{itemize}
+      \item Domain independent axioms %(denoted $\mathcal{P}_\sigma$)
+      %\item notion of entailment between query and domain description
     \end{itemize}
   \end{frame}
 
 \section{The Language of Prioritized Defaults}
 
-  \subsection{Syntax}
+  \subsection{Domain Description}
 
   %\begin{frame}{brave approach}
   %  include (resolve) all possible answer sets\\
   %  ...
   %\end{frame}
 
-  \begin{frame}{Domain description}
+  \begin{frame}{Domain Description}
+    NAHRADIT ZA HOLDY
     \begin{itemize}
       \item Introducing language $\mathcal{L}_0(\sigma)$
       \item parametrized by sorted signature $\sigma$
@@ -210,7 +233,16 @@ Vladislav Vavra
     \end{itemize}
   \end{frame}
 
-  \begin{frame}{Domain description}
+  \begin{frame}{Entailment in domain description}
+    \textbf{Definition 2.2} We say that a domain description $\mathcal{D}$ entails
+    a~query q $(\mathcal{D} \models q)$ if q belongs to every answer set
+    of the~program \\
+    $\mathcal{P}_\sigma(\mathcal{D}) = \mathcal{P}_\sigma \cup \{ holds(l) \ | \ l \in fact(\mathcal{D}) \} \cup laws(\mathcal{D})$. 
+  
+    $laws(\mathcal{D})$ denotes set of statements of the form \ref{item:rule1} and \ref{item:rule2}
+  \end{frame}
+
+  \begin{frame}{Domain Description}
     \begin{itemize}
       \item Terms to Describe Defaults and Strict Rules:
     \end{itemize}
@@ -223,7 +255,7 @@ Vladislav Vavra
     \end{alignat}
   \end{frame}
   
-  \begin{frame}{Domain description - intuition}
+  \begin{frame}{Domain Description - Intuition}
     \begin{itemize}
       \item "logic counter-part" as intuitive explanaiton\\
       \item rule $r_0$:    $ l_0 \leftarrow l_1, \dots, l_n. $
@@ -232,29 +264,8 @@ Vladislav Vavra
   \end{frame}
   
   
-  \begin{frame}{Example - programming students}
-    dept, mary, isin etc..
-    \begin{alltt}
-student(mary). dept(cs). \ is\_in(mary,cs). \\
-student(mike). dept(art). is\_in(mike,art).\\
-student(sam). \ dept(cis). is\_in(sam,cis). \\ ~ \\
-default(d1(S), -can\_progr(S), [student(S)]). \\
-default(d2(S), \ can\_progr(S), [student(S), \\
-\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_in(S, cs)]).
-    \end{alltt}
-  \end{frame}
+  \subsection{Domain Independent Axioms}
   
-  
-  \subsection{Axioms of P}
-  
-  \begin{frame}{Entailment in domain description}
-    \textbf{Definition 2.2} We say that a domain description $\mathcal{D}$ entails
-    a~query q $(\mathcal{D} \models q)$ if q belongs to every answer set
-    of the~program \\
-    $\mathcal{P}_\sigma(\mathcal{D}) = \mathcal{P}_\sigma \cup \{ holds(l) \ | \ l \in fact(\mathcal{D}) \} \cup laws(\mathcal{D})$. 
-  
-    $laws(\mathcal{D})$ denotes set of statements of the form \ref{item:rule1} and \ref{item:rule2}
-    \end{frame}
   
   
   \begin{frame}{Axioms}
