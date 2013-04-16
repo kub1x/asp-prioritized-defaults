@@ -151,7 +151,7 @@ Vladislav Vavra
     \end{itemize}
   \end{frame}
   
-  \subsection[Approaches]{Two possible approaches}
+  \subsection[Approaches]{Two Possible Approaches}
 
   \begin{frame}{Two Possible Approaches}
     \begin{itemize}
@@ -176,6 +176,10 @@ Vladislav Vavra
     \end{itemize}
   \end{frame}
 
+
+\section{The Language of Prioritized Defaults}
+
+  \subsection{Hello Priorities - Language Demo}
   
   \begin{frame}{Example - Programming Students}
     \begin{alltt}
@@ -185,88 +189,82 @@ student(sam). \ dept(cis). is\_in(sam,cis). \\ ~ \\
 default(d1(S), -can\_progr(S), [student(S)]). \\
 default(d2(S), \ can\_progr(S), [student(S), \\
 \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_in(S,cs)]).\\ ~ \\
-prefer(d1(S), d2(S)).
+prefer(d2(S), d1(S)). \\ ~ \\
+rule(r1(S), can\_read(S), [student(S)]).
     \end{alltt}
   \end{frame}
+
+  \subsection{Domain Description}
   
-  \begin{frame}{The Language of Prioritized Defaults}
-    Logic program composed of: %$\mathcal{P}$
-    \begin{itemize}
-      \item Domain description %(denoted $\mathcal{D}$)
+  \begin{frame}{Domain Description}
+    %Logic program composed of: %$\mathcal{P}$
+    %\begin{itemize}
+      %\item Domain description %(denoted $\mathcal{D}$)
       \begin{itemize}
         \item Facts 
-        \item Laws about defaults and preferences
+        \begin{itemize}
+          \item all the facts from our original domain
+          \item \texttt{prefer(D1, D2)} 
+          \item \texttt{conflict(D1, D2)}
+        \end{itemize}
+        \item Laws
         \begin{itemize}
           %\item i.e. statements in form default(D, L, Body) and \mbox{prefer(D1, D2).} 
           \item \texttt{rule(R, H, Body)} 
           \item \texttt{default(D, H, Body)}
         \end{itemize}
       \end{itemize}
-      \item Domain independent axioms %(denoted $\mathcal{P}_\sigma$)
+    %  \item Domain independent axioms %(denoted $\mathcal{P}_\sigma$)
       %\item notion of entailment between query and domain description
-    \end{itemize}
+    %\end{itemize}
   \end{frame}
 
-\section{The Language of Prioritized Defaults}
+  \begin{frame}{Domain Description - Refinement of Facts}
 
-  \subsection{Domain Description}
+    Basic relations
 
-  %\begin{frame}{brave approach}
-  %  include (resolve) all possible answer sets\\
-  %  ...
+    \begin{itemize}
+      \item \texttt{holds(l)} denotes that literal \texttt{l} strictly holds  
+      \item \texttt{holds\_by\_default(l)}
+       denotes that literal \texttt{l} holds defeasibly i.e. by some default
+    \end{itemize}
+
+    Translating facts of our domain into ASP
+
+    \begin{itemize}
+      \item $\mathcal{P}(\mathcal{D}) = \mathcal{P} \cup \{ holds(l) \ | \ l \in fact(\mathcal{D}) \} \cup laws(\mathcal{D})$. 
+    \end{itemize}
+
+  \end{frame}
+
+  %\begin{frame}{Entailment in Domain Description}
+  %  \textbf{Definition 2.2}
+  %  We say that a domain description $\mathcal{D}$ entails
+  %  a~query q $(\mathcal{D} \models q)$ if q belongs to every answer set
+  %  of the~program \\
+  %  $\mathcal{P}_\sigma(\mathcal{D}) = \mathcal{P}_\sigma \cup \{ holds(l) \ | \ l \in fact(\mathcal{D}) \} \cup laws(\mathcal{D})$. 
+  %
+  %  $laws(\mathcal{D})$ denotes set of statements of the form \ref{item:rule1} and \ref{item:rule2}
   %\end{frame}
 
-  \begin{frame}{Domain Description}
-    NAHRADIT ZA HOLDY
-    \begin{itemize}
-      \item Introducing language $\mathcal{L}_0(\sigma)$
-      \item parametrized by sorted signature $\sigma$
-      \begin{itemize}
-        \item names from user's domain
-        \item terms to describe defaults and strict rules
-      \end{itemize}
-      \item describing Domain knowledge using: 
-      \begin{itemize}
-        \item collection of literals of $\sigma$
-        \item statemens describing strict rules, defaults and preferences
-      \end{itemize}
-    \end{itemize}
-  \end{frame}
-
-  \begin{frame}{Entailment in domain description}
-    \textbf{Definition 2.2} We say that a domain description $\mathcal{D}$ entails
-    a~query q $(\mathcal{D} \models q)$ if q belongs to every answer set
-    of the~program \\
-    $\mathcal{P}_\sigma(\mathcal{D}) = \mathcal{P}_\sigma \cup \{ holds(l) \ | \ l \in fact(\mathcal{D}) \} \cup laws(\mathcal{D})$. 
+  %\begin{frame}{Terms to Describe Defaults and Strict Rules}
+  %  \begin{alignat}{1}
+  %  & \hspace*{-5cm} \label{item:rule1} rule(r_0, l_0, [l_1, \dots l_m]) \\
+  %  & \hspace*{-5cm} \label{item:rule2} default(d_0, l_0, [l_1, \dots l_m]) \\
+  %  & \hspace*{-5cm} \label{item:rule3} conflict(d_1, d_2) \\
+  %  & \hspace*{-5cm} \label{item:rule4} prefer(d_1, d_2)
+  %  \end{alignat}
+  %\end{frame}
   
-    $laws(\mathcal{D})$ denotes set of statements of the form \ref{item:rule1} and \ref{item:rule2}
-  \end{frame}
-
-  \begin{frame}{Domain Description}
-    \begin{itemize}
-      \item Terms to Describe Defaults and Strict Rules:
-    \end{itemize}
-
-    \begin{alignat}{1}
-    & \label{item:rule1} rule(r_0, l_0, [l_1, \dots l_m]) \\
-    & \label{item:rule2} default(d_0, l_0, [l_1, \dots l_m]) \\
-    & \label{item:rule3} conflict(d_1, d_2) \\
-    & \label{item:rule4} prefer(d_1, d_2)
-    \end{alignat}
-  \end{frame}
-  
-  \begin{frame}{Domain Description - Intuition}
-    \begin{itemize}
-      \item "logic counter-part" as intuitive explanaiton\\
-      \item rule $r_0$:    $ l_0 \leftarrow l_1, \dots, l_n. $
-      \item default $d_0$: $ l_0 \leftarrow l_1, \dots, l_n, not ~ \neg l_0. $
-    \end{itemize}
-  \end{frame}
-  
+  %\begin{frame}{Domain Description - Intuition}
+  %  \begin{itemize}
+  %    \item "logic counter-part" as intuitive explanaiton\\
+  %    \item rule $r_0$:    $ l_0 \leftarrow l_1, \dots, l_n. $
+  %    \item default $d_0$: $ l_0 \leftarrow l_1, \dots, l_n, not ~ \neg l_0. $
+  %  \end{itemize}
+  %\end{frame}
   
   \subsection{Domain Independent Axioms}
-  
-  
   
   \begin{frame}{Axioms}
     \begin{itemize}
